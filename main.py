@@ -55,20 +55,27 @@ centralities = [nx.degree_centrality, nx.closeness_centrality,
                 nx.betweenness_centrality, nx.eigenvector_centrality]
 print("Top central actors:")
 for centrality in centralities:
-    print(sorted(centrality(G).items(), key=operator.itemgetter(1), reverse=True)[:5])
+    print(sorted(centrality(G).items(), key=operator.itemgetter(1), reverse=True)[:3])
     nx.set_node_attributes(G, centrality.__name__, centrality(G))
 
 paths = dict()
 average_bacon = 0
+bacon_count = 0
 for s in G:
-    paths[s] = len(nx.single_source_shortest_path(G, s))
-    average_bacon += paths[s]
+    try:
+        paths[s] = nx.shortest_path_length(G,s,"Richard Wattis")
+    except nx.exception.NetworkXNoPath as e:
+        paths[s] = -1
+    if paths[s] != -1:
+        average_bacon += paths[s]
+        bacon_count += 1
+print(paths)
 print("Top anti-Kevin Bacon actors:")
-print(sorted(paths.items(), key=operator.itemgetter(1), reverse=True)[:5])
+print(sorted(paths.items(), key=operator.itemgetter(1), reverse=True)[:3])
 print("Top Kevin Bacon actors:")
-print(sorted(paths.items(), key=operator.itemgetter(1), reverse=False)[:5])
+print(sorted(paths.items(), key=operator.itemgetter(1), reverse=False)[:3])
 print("Average distance:")
-print(average_bacon/G.number_of_nodes())
+print(average_bacon/bacon_count)
 nx.set_node_attributes(G, "Bacon number", paths)
 communities = {node: cid + 1 for cid, community in enumerate(nx.k_clique_communities(G, 3)) for node in community}
 
