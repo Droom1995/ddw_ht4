@@ -61,11 +61,11 @@ for centrality in centralities:
 paths = dict()
 average_bacon = 0
 for s in G:
-    paths[s] = nx.single_source_shortest_path(G, s)
+    paths[s] = len(nx.single_source_shortest_path(G, s))
     average_bacon += paths[s]
-print("Top Kevin Bacon actors:")
-print(sorted(paths.items(), key=operator.itemgetter(1), reverse=True)[:5])
 print("Top anti-Kevin Bacon actors:")
+print(sorted(paths.items(), key=operator.itemgetter(1), reverse=True)[:5])
+print("Top Kevin Bacon actors:")
 print(sorted(paths.items(), key=operator.itemgetter(1), reverse=False)[:5])
 print("Average distance:")
 print(average_bacon/G.number_of_nodes())
