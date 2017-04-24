@@ -48,8 +48,16 @@ Top Kevin Bacon actors:
 Average distance:
 1.303030303030303
 
+# Screenshots
 
 
-# 
+Communities:
+
+![Alt text](commies.png?raw=true "Communities screenshot from Gephi")
+
+
 
 # Remarks 
+
+GEXF File for gephi - https://github.com/Droom1995/ddw_ht4/blob/master/export.gexf
+
